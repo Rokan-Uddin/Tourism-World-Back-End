@@ -20,7 +20,7 @@ async function run() {
         await client.connect()
         const database = client.db("our_world")
         const packageCollection = database.collection("package")
-
+        const touristInformationCollection = database.collection("touristInformation")
         // package get api 
         app.get('/package', async(req,res)=>{
             const cursor= packageCollection.find({})
@@ -34,7 +34,28 @@ async function run() {
             const package = await packageCollection.findOne(query);
             res.json(package);
         })
-
+        //add package api
+        app.post('/package',async(req,res)=>{
+            const touristInformation = req.body;
+            const result = await touristInformationCollection.insertOne(touristInformation);
+            res.json(result)
+        })
+        app.post('/mypackage',async(req,res)=>{
+            const email= req.query.email;
+            const cursor= touristInformationCollection.find({email})
+            const mypackage= await cursor.toArray();
+            res.json(mypackage)
+        })
+        app.delete('/mypackage',async(req,res)=>{
+            const id=req.query.id;
+            const result =await touristInformationCollection.deleteOne({_id:ObjectId(id)});
+            res.json(result)
+        })
+        app.get('/allconfirmedpackage',async(req,res)=>{
+            const cursor= touristInformationCollection.find({})
+            const allconfirmedpackage= await cursor.toArray();
+            res.json(allconfirmedpackage)
+        })
     }
     finally{
 
