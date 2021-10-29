@@ -21,6 +21,9 @@ async function run() {
         const database = client.db("our_world")
         const packageCollection = database.collection("package")
         const touristInformationCollection = database.collection("touristInformation")
+        const tropicalVacationCollection = database.collection("tropical_vacation");
+
+
         // package get api 
         app.get('/package', async(req,res)=>{
             const cursor= packageCollection.find({})
@@ -61,6 +64,14 @@ async function run() {
             const result = await packageCollection.insertOne(newPackage);
             res.json(result)
         })
+
+        // tropical vacation api 
+        app.get('/vacations', async(req,res)=>{
+            const cursor= tropicalVacationCollection.find({})
+            const vacations=await cursor.toArray();
+            res.json(vacations)
+        })
+
     }
     finally{
 
