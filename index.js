@@ -49,6 +49,21 @@ async function run() {
             const mypackage= await cursor.toArray();
             res.json(mypackage)
         })
+        // api for update confirmed package status 
+        app.put('/mypackage',async(req,res)=>{
+            let statusValue;
+            if(req.query.status=="true") statusValue=false;
+            else statusValue=true;
+            const filter = { _id: ObjectId(req.query.id) };
+            const options = { upsert: true };
+            const updateDoc = {
+              $set: {
+                status:statusValue
+              },
+            };
+            const result = await touristInformationCollection.updateOne(filter, updateDoc, options);
+            res.json(result)
+        })
         app.delete('/mypackage',async(req,res)=>{
             const id=req.query.id;
             const result =await touristInformationCollection.deleteOne({_id:ObjectId(id)});
@@ -85,40 +100,3 @@ app.get('/', (req, res) => {
 app.listen(port,()=>{
     console.log("Server Running at ",port)
 })
-
-               // // POST API
-                // app.post('/users', async (req, res) => {
-                //     const newUser = req.body;
-                //     const result = await usersCollection.insertOne(newUser);
-                //     console.log('got new user', req.body);
-                //     console.log('added user', result);
-                //     res.json(result);
-                // });
-        
-                // //UPDATE API
-                // app.put('/users/:id', async (req, res) => {
-                //     const id = req.params.id;
-                //     const updatedUser = req.body;
-                //     const filter = { _id: ObjectId(id) };
-                //     const options = { upsert: true };
-                //     const updateDoc = {
-                //         $set: {
-                //             name: updatedUser.name,
-                //             email: updatedUser.email
-                //         },
-                //     };
-                //     const result = await usersCollection.updateOne(filter, updateDoc, options)
-                //     console.log('updating', id)
-                //     res.json(result)
-                // })
-        
-                // // DELETE API
-                // app.delete('/users/:id', async (req, res) => {
-                //     const id = req.params.id;
-                //     const query = { _id: ObjectId(id) };
-                //     const result = await usersCollection.deleteOne(query);
-        
-                //     console.log('deleting user with id ', result);
-        
-                //     res.json(result);
-                // })
