@@ -56,6 +56,11 @@ async function run() {
             const allconfirmedpackage= await cursor.toArray();
             res.json(allconfirmedpackage)
         })
+        app.post('/add',async(req,res)=>{
+            const newPackage=req.body;
+            const result = await packageCollection.insertOne(newPackage);
+            res.json(result)
+        })
     }
     finally{
 
