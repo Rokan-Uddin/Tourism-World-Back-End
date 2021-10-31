@@ -1,7 +1,7 @@
 # Server side of 'Tourism World', a tour booking system.
 
-LiveSite link:  [Click Here](https://our-world-d351c.web.app/).
-server link: [Click Here](https://guarded-fjord-59567.herokuapp.com/)
+* LiveSite link:  [Click Here](https://our-world-d351c.web.app/).
+* server link: [Click Here](https://guarded-fjord-59567.herokuapp.com/)
 
 ## In the server side you can run CURD(create,update,read,delete) operation for tour planning as a login user or admin.
 
